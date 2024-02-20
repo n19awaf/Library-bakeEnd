@@ -20,9 +20,9 @@ public class Review {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Column(name = "data")
+    @Column(name = "date")
     @CreationTimestamp
-    private Date data;
+    private Date date;
 
     @Column(name = "rating")
     private double rating;
