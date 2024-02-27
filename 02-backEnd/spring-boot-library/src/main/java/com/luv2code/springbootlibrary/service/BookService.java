@@ -47,6 +47,17 @@ public class BookService {
         checkoutRepository.save(checkout);
 
         return book.get();
-
     }
+
+    //verifying if this book is checked out by the user or not
+    public Boolean checkoutBookByUser(String userEmail, Long bookId){
+       Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+       if (validateCheckout != null){
+           return true;
+       }else {
+           return false;
+       }
+    }
+
+
 }
