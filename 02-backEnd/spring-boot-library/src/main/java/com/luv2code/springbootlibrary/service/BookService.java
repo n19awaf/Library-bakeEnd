@@ -28,9 +28,8 @@ public class BookService {
 
         Optional<Book> book = bookRepository.findById(bookId);
 
-        // only want a user to be able to check out a single book one time
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
-
+        // only want a user to be able to check out a single book one time
         if (!book.isPresent() || validateCheckout != null || book.get().getCopiesAvailable() <= 0){
             throw new Exception("Book doesn't exist or already checked out by user");
         }
