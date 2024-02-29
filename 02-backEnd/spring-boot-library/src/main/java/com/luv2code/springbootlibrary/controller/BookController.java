@@ -3,13 +3,14 @@ package com.luv2code.springbootlibrary.controller;
 
 import com.luv2code.springbootlibrary.entity.Book;
 import com.luv2code.springbootlibrary.service.BookService;
+import com.luv2code.springbootlibrary.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/api/books")
 public class BookController {
 
     private BookService bookService;
@@ -22,14 +23,14 @@ public class BookController {
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization") String token){
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.currentLoansCount(userEmail);
 
     }
-    @GetMapping("secure/ischeckedout/byuser")
+    @GetMapping("/secure/ischeckedout/byuser")
     public boolean checkoutBookByUser (@RequestHeader(value = "Authorization") String token,
                                        @RequestParam Long bookId){
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.checkoutBookByUser(userEmail, bookId);
     }
 
@@ -37,7 +38,7 @@ public class BookController {
     @PutMapping("/secure/checkout")
     public Book checkoutBook (@RequestHeader(value = "Authorization") String token,
                               @RequestParam Long bookId) throws Exception{
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.checkoutBook(userEmail, bookId);
 
     }
