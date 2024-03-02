@@ -12,5 +12,5 @@ public class ReviewRequest {
 
     private Long bookId;
 
-    private Optional<String> reviewDescriotion;
+    private Optional<String> reviewDescription;
 }
