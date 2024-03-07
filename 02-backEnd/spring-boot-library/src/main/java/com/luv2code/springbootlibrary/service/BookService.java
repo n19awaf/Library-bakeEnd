@@ -98,8 +98,13 @@ public class BookService {
                 Date d2 = sdf.parse(LocalDate.now().toString());
 
                 TimeUnit time = TimeUnit.DAYS;
+
+                long difference_In_Time = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MICROSECONDS);
+
+                shelfCurrentLoansResponses.add(new ShelfCurrentLoansResponse(book, (int) difference_In_Time));
             }
         }
+        return shelfCurrentLoansResponses;
 
     }
 
