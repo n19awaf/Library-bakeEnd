@@ -30,7 +30,7 @@ public class History {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Column(name = "checkout-date")
+    @Column(name = "checkout_date")
     private String checkoutDate;
 
     @Column(name = "return_date")

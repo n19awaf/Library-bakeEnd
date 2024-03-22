@@ -56,21 +56,19 @@ public class BookController {
 
     //retrun Book
     @PutMapping("/secure/return")
-    public void  returnBook(@RequestHeader(value = "Authorization" ) String token,
-                            @RequestParam Long bookId) throws Exception {
+    public void returnBook(@RequestHeader(value = "Authorization") String token,
+                           @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         bookService.returnBook(userEmail, bookId);
-
     }
 
     //renew Book
     @PutMapping("/secure/renew/loan")
-    public void renewLoan(@RequestHeader(value = "Authorization" ) String token,
+    public void renewLoan(@RequestHeader(value = "Authorization") String token,
                           @RequestParam Long bookId) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         bookService.renewLoan(userEmail, bookId);
     }
-
 
 
 }
