@@ -1,4 +1,7 @@
 package com.luv2code.springbootlibrary.dao;
 
-public interface MessageRepository {
+import com.luv2code.springbootlibrary.entity.Message;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MessageRepository extends JpaRepository<Message, Long> {
 }
