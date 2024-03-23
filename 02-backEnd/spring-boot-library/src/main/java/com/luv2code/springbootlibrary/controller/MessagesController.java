@@ -20,11 +20,10 @@ public class MessagesController {
         this.messagesService = messagesService;
     }
 
-    @PutMapping("/secure/add/message")
-    public Book postMessage (@RequestHeader(value = "Authorization") String token,
-                              @RequestBody Message messageRequest) throws Exception{
+    @PostMapping ("/secure/add/message")
+    public void postMessage (@RequestHeader(value = "Authorization") String token,
+                              @RequestBody Message messageRequest) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        messagesService.postMessage(messageRequest,userEmail);
-
+        messagesService.postMessage(messageRequest, userEmail);
     }
 }
