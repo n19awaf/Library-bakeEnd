@@ -1,8 +1,9 @@
 package com.luv2code.springbootlibrary.controller;
 
 
-import com.luv2code.springbootlibrary.entity.Book;
+
 import com.luv2code.springbootlibrary.entity.Message;
+import com.luv2code.springbootlibrary.requestmodels.AdminQuestionReques;
 import com.luv2code.springbootlibrary.service.MessagesService;
 import com.luv2code.springbootlibrary.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,23 @@ public class MessagesController {
         this.messagesService = messagesService;
     }
 
+    //user send messages
     @PostMapping ("/secure/add/message")
     public void postMessage (@RequestHeader(value = "Authorization") String token,
                               @RequestBody Message messageRequest) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         messagesService.postMessage(messageRequest, userEmail);
+    }
+
+
+    @PutMapping("/secure/admin/message")
+    public void putMessage(@RequestHeader(value = "Authorization") String token,
+                           @RequestBody AdminQuestionReques adminQuestionReques) throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        String admin= ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if (admin == null || !admin.equals("admin")) {
+            throw new Exception("Administration page only");
+        }
+        messagesService.putMessage(adminQuestionReques, userEmail);
     }
 }
