@@ -41,11 +41,23 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+        <!-- Okta dependency -->
 		<dependency>
 			<groupId>com.okta.spring</groupId>
 			<artifactId>okta-spring-boot-starter</artifactId>
 			<version>2.1.6</version>
+		</dependency>
+
+		<!--
+			 For Maven, add the following dependency to your POM and replace with the
+			 version number you want to use from:
+			 - https://mvnrepository.com/artifact/com.stripe/stripe-java or
+			 - https://github.com/stripe/stripe-java/releases/latest
+		-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>22.0.0</version>
 		</dependency>
 	</dependencies>
 
