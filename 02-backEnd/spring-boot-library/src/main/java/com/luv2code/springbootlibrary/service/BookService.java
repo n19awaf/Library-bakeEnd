@@ -8,6 +8,7 @@ import com.luv2code.springbootlibrary.dao.PaymentRepository;
 import com.luv2code.springbootlibrary.entity.Book;
 import com.luv2code.springbootlibrary.entity.Checkout;
 import com.luv2code.springbootlibrary.entity.History;
+import com.luv2code.springbootlibrary.entity.Payment;
 import com.luv2code.springbootlibrary.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,27 @@ public class BookService {
         for (Checkout checkout: currentBooksCheckedOut) {
             Date d1 = sdf.parse(checkout.getReturnDate());
             Date d2 = sdf.parse(LocalDate.now().toString());
+
+            TimeUnit time = TimeUnit.DAYS;
+
+            double differenceTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);
+
+            if (differenceTime < 0) {
+                bookNeedReturned = true;
+                break;
+            }
+        }
+
+        Payment userPayment = paymentRepository.findByUserEmail(userEmail);
+        if ((userPayment != null && userPayment.getAmount() > 0) || (userPayment != null && bookNeedReturned)) {
+            throw new Exception("Outstanding fees");
+        }
+
+        if (userPayment == null) {
+            Payment payment = new Payment();
+            payment.setAmount(00.00);
+            payment.setUserEmail(userEmail);
+            paymentRepository.save(payment);
         }
 
 
