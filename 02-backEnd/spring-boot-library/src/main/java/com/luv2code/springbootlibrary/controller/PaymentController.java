@@ -32,7 +32,7 @@ public class PaymentController {
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
     }
 
-    @PutMapping("/payment-complate")
+    @PutMapping("/payment-complete")
     public ResponseEntity<String> stripePaymentComplete(@RequestHeader(value = "Authorization") String token) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         if (userEmail == null){

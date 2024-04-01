@@ -54,9 +54,10 @@ public class BookService {
 
         //if that are late that need to be returned and need to be paid for user can check out again.
         List<Checkout> currentBooksCheckedOut = checkoutRepository.findBookByUserEmail(userEmail);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        boolean bookNeedReturned = false;
+        boolean bookNeedsReturned = false;
 
         for (Checkout checkout: currentBooksCheckedOut) {
             Date d1 = sdf.parse(checkout.getReturnDate());
@@ -64,16 +65,17 @@ public class BookService {
 
             TimeUnit time = TimeUnit.DAYS;
 
-            double differenceTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);
+            double differenceInTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);
 
-            if (differenceTime < 0) {
-                bookNeedReturned = true;
+            if (differenceInTime < 0) {
+                bookNeedsReturned = true;
                 break;
             }
         }
 
         Payment userPayment = paymentRepository.findByUserEmail(userEmail);
-        if ((userPayment != null && userPayment.getAmount() > 0) || (userPayment != null && bookNeedReturned)) {
+
+        if ((userPayment != null && userPayment.getAmount() > 0) || (userPayment != null && bookNeedsReturned)) {
             throw new Exception("Outstanding fees");
         }
 
@@ -85,7 +87,7 @@ public class BookService {
         }
 
 
-
+        //////
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
         bookRepository.save(book.get());
 

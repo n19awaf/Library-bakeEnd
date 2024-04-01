@@ -27,15 +27,14 @@ public class PaymentService {
         Stripe.apiKey = secretKey;
     }
 
-
     public PaymentIntent createPaymentIntent(PaymentInfoRequest paymentInfoRequest) throws StripeException {
         List<String> paymentMethodTypes = new ArrayList<>();
         paymentMethodTypes.add("card");
 
         Map<String, Object> params = new HashMap<>();
         params.put("amount", paymentInfoRequest.getAmount());
-        params.put("current", paymentInfoRequest.getCurrency());
-        params.put("payment_method_type", paymentMethodTypes);
+        params.put("currency", paymentInfoRequest.getCurrency());
+        params.put("payment_method_types", paymentMethodTypes);
 
         return PaymentIntent.create(params);
     }
@@ -50,5 +49,6 @@ public class PaymentService {
         paymentRepository.save(payment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-}
 
+
+}
